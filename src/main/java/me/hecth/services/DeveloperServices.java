@@ -1,5 +1,7 @@
 package me.hecth.services;
 
+import br.com.caelum.stella.ValidationMessage;
+import br.com.caelum.stella.validation.CPFValidator;
 import me.hecth.domain.models.Developer;
 import me.hecth.domain.repositories.DeveloperRepository;
 import me.hecth.services.exceptions.BusinessException;
@@ -30,6 +32,9 @@ public class DeveloperServices {
     public Developer create(Developer devToCreate) {
         ofNullable(devToCreate).orElseThrow(() -> new BusinessException("Developer must not be null"));
 
+        if (!isValidCPF(devToCreate.getCpf())) {
+            throw new BusinessException("Invalid CPF");
+        }
         if (developerRepository.existsByCpf(devToCreate.getCpf())) {
             throw new BusinessException("This developer already exists");
         }
@@ -51,5 +56,11 @@ public class DeveloperServices {
     public void delete(String cpf) {
         Developer dbDev = this.findByCPF(cpf);
         developerRepository.delete(dbDev);
+    }
+
+    private boolean isValidCPF(String cpf) {
+        CPFValidator cpfValidator = new CPFValidator();
+        List<ValidationMessage> errors = cpfValidator.invalidMessagesFor(cpf);
+        return errors.isEmpty();
     }
 }

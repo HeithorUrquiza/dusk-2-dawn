@@ -2,6 +2,7 @@ package me.hecth.domain.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Developer {
