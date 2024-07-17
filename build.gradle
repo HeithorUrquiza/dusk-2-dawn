@@ -9,7 +9,8 @@ version = '0.0.1-SNAPSHOT'
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
+		// Must be 17 to deploy on Railway
+		languageVersion = JavaLanguageVersion.of(21)
 	}
 }
 
