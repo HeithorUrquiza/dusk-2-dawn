@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<String> handleNotFoundException() {
-        return new ResponseEntity<>("Resource CPF not found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Resource not found", HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(Throwable.class)

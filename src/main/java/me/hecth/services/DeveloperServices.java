@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
 import static java.util.Optional.ofNullable;
 
 @Service
@@ -25,7 +26,7 @@ public class DeveloperServices {
 
     @Transactional(readOnly = true)
     public Developer findByCPF(String cpf) {
-        return developerRepository.findById(cpf).orElseThrow(NotFoundException::new);
+        return developerRepository.findByCpf(cpf).orElseThrow(NotFoundException::new);
     }
 
     @Transactional
@@ -53,11 +54,13 @@ public class DeveloperServices {
         return developerRepository.save(dbDev);
     }
 
+    @Transactional
     public void delete(String cpf) {
         Developer dbDev = this.findByCPF(cpf);
         developerRepository.delete(dbDev);
     }
 
+    // Check if a CPF is valid
     private boolean isValidCPF(String cpf) {
         CPFValidator cpfValidator = new CPFValidator();
         List<ValidationMessage> errors = cpfValidator.invalidMessagesFor(cpf);
